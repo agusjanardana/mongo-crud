@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+          <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+
+
+          <link
+               rel="stylesheet"
+               href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"
+          />
+
+          <link
+               rel="stylesheet"
+               href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css"
+          />
+     </head>
+     <body>
+          <div class="container" class="w-75">
+               <table id="example" style=
+          "margin : auto;"
+          class="table table-striped table-hover">
+               <thead>
+                    <tr>
+                         <th>No</th>
+                         <th>Kategori</th>
+                         <th>Name</th>
+                         <th>Price</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    <% for(var i=0; i<product.length ; i++) { %> 
+                    <tr>
+                         <td><%= i + 1 %> </td>
+                         <td><%= product[i].kategori %> </td>
+                         <td><%= product[i].name %> </td>
+                         <td><%= product[i].price %> </td>
+                    </tr>
+                    <% } %>
+               </tbody>
+          </table>
+          </div>
+          
+          <!-- script jquery dan datatables -->
+          <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+          <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+          <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+
+          <script>
+               $(document).ready(function () {
+                    $('#example').DataTable();
+               });
+          </script>
+     </body>
+</html>
