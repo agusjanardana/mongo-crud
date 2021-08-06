@@ -32,6 +32,7 @@
                          <th>Kategori</th>
                          <th>Name</th>
                          <th>Price</th>
+                         <th>Aksi</th>
                     </tr>
                </thead>
                <tbody>
@@ -41,16 +42,26 @@
                          <td><%= product[i].kategori %> </td>
                          <td><%= product[i].name %> </td>
                          <td><%= product[i].price %> </td>
+                         <td>
+                              <a href="/update-product?id=<%= product[i]._id %> " class="btn btn-primary">
+                                   Edit
+                              </a>
+                              <button onClick="goto()" class="btn btn-danger delete" data-id=<%= product[i]._id%> >
+                                   Delete
+                              </button>
+                         </td>
                     </tr>
                     <% } %>
                </tbody>
           </table>
+          
           </div>
           
           <!-- script jquery dan datatables -->
           <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
           <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
           <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+          <script src="./asset/index.js"></script>
 
           <script>
                $(document).ready(function () {
