@@ -48,11 +48,11 @@
                               <a href="/update-product?id=<%= product[i]._id %> " class="btn btn-primary me-1" style="height:38px;">
                                    Edit
                               </a>
-                              <form method="" id="tag<%= product[i]._id%>" >
-                                   <button onclick = "deleteData()" type="submit" class="btn btn-danger submit-delete" data-id=<%= product[i]._id%> >
+                              <!-- <form method="" id="tag<%= product[i]._id%>" > -->
+                                   <button  type="submit" id=<%= product[i]._id%> class="btn btn-danger submit-delete" data-id=<%= product[i]._id%> >
                                         Delete
                                    </button>
-                              </form>
+                              <!-- </form> -->
                          </td>
                     </tr>
                     <% } %>
@@ -62,12 +62,12 @@
           </div>
           <!-- delete script -->
           <script>
-               function deleteData() { 
-                    $('form[id^=tag]').submit(function (event) {
-                    event.preventDefault();
 
-                    var id = $('.submit-delete').attr('data-id')
-                    console.log(id)
+               $('.submit-delete').on('click',function(e) { 
+                    console.log(e.target.id);
+                    e.preventDefault();
+
+                    var id = e.target.id
 
                     var request = {
                          'url': `http://localhost:3000/api/product/` + id,
@@ -81,10 +81,8 @@
                               location.reload();
                          })
                     }
-               
-               }
-          );
-          }
+               })
+              
                     
           </script>
           
