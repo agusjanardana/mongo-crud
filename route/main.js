@@ -1,9 +1,20 @@
+//kita membutuhkan module router untuk membagi router
 var router = require('express').Router();
 const { response } = require('express');
+
+//import controller Product
 const productController = require('../controllers/productController');
+
+//import models product.
 const product = require('../models/product');
 
+//import axios untuk membantu di server
 const axios = require('axios');
+
+/**
+ *  @description Disini kita buat route untuk endpoint dari frontEndnya.
+ *  @method GET /
+ */
 
 router.get('/', function (req, res) {
    axios
@@ -33,8 +44,12 @@ router.get('/update-product', (req, res) => {
       });
 });
 
-//untuk API
-router.post('/api/product', productController.create);
+/**
+ *  @description untuk endpoint API nya
+ *  @method GET,POST,PUT,DELETE /
+ */
+
+router.post('/api/products', productController.create);
 router.get('/api/product', productController.fetch);
 router.put('/api/product/:id', productController.update);
 router.delete('/api/product/:id', productController.delete);
