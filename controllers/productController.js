@@ -2,6 +2,7 @@ var Product = require('../models/product');
 
 exports.create = (req, res) => {
    // validasi apakah body ada atau tidak
+   console.log(req.body);
    if (!req.body) {
       res.status(400).send({
          message: 'Beberapa content tidak boleh kosong loh',
@@ -10,16 +11,14 @@ exports.create = (req, res) => {
    }
 
    // new Product
-   const product = new Product({
-      kategori: req.body.kategori,
-      name: req.body.name,
-      price: req.body.price,
-   });
+   var product = new Product();
+   product.kategori = req.body.kategori;
+   product.name = req.body.name;
+   product.price = req.body.price;
 
    // save ke DB
    try {
       product.save().then((data) => {
-         //  res.send(data);
          res.redirect('/');
       });
    } catch (error) {
@@ -39,7 +38,6 @@ exports.fetch = (req, res) => {
                   message: 'Ga ketemu product dengan id tersebut.',
                });
             } else {
-               console.log(data);
                res.send(data);
             }
          })
@@ -51,7 +49,6 @@ exports.fetch = (req, res) => {
    } else {
       Product.find()
          .then((data) => {
-            console.log(data);
             res.send(data);
          })
          .catch((err) => {
@@ -61,20 +58,22 @@ exports.fetch = (req, res) => {
 };
 
 exports.update = (req, res) => {
+   //validasi apakah req body ada atau tidak
    if (!req.body) {
-      return res
-         .status(400)
-         .send({ message: 'Data to update can not be empty' });
+      return res.status(400).send({ message: 'Ga boleh kosong' });
    }
 
+   //ambil params idnya
    const id = req.params.id;
+
+   //gunakan method findByIdAndUpdate ditentukan dari id dan req bodynya.
    Product.findByIdAndUpdate(id, req.body, {
       useFindAndModify: false,
    })
       .then((data) => {
          if (!data) {
             res.status(404).send({
-               message: `Cannot Update user with ${id}. Maybe user not found!`,
+               message: `Ga ketemu usernya dengan ${id}!`,
             });
          } else {
             res.send(data);
@@ -88,8 +87,10 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
+   //request paramsnya
    const id = req.params.id;
 
+   //findByID and Delete dari product
    Product.findByIdAndDelete(id)
       .then((data) => {
          if (!data) {
