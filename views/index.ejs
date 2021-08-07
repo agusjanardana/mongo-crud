@@ -10,6 +10,7 @@
 
           <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
           <link
                rel="stylesheet"
@@ -23,9 +24,10 @@
      </head>
      <body>
           <div class="container" class="w-75">
+               <a type="button" href="add-product" class="btn btn-success mb-3 mt-2">+Add New Product</a>
                <table id="example" style=
-          "margin : auto;"
-          class="table table-striped table-hover">
+               "margin : auto;"
+               class="table table-striped table-hover">
                <thead>
                     <tr>
                          <th>No</th>
@@ -42,13 +44,15 @@
                          <td><%= product[i].kategori %> </td>
                          <td><%= product[i].name %> </td>
                          <td><%= product[i].price %> </td>
-                         <td>
-                              <a href="/update-product?id=<%= product[i]._id %> " class="btn btn-primary">
+                         <td class="d-flex flex-row">
+                              <a href="/update-product?id=<%= product[i]._id %> " class="btn btn-primary me-1" style="height:38px;">
                                    Edit
                               </a>
-                              <button onClick="goto()" class="btn btn-danger delete" data-id=<%= product[i]._id%> >
+                              <form method="" id="deleteProduct">
+                                   <button type="submit" class="btn btn-danger submit-delete" data-id=<%= product[i]._id%> >
                                    Delete
                               </button>
+                              </form>
                          </td>
                     </tr>
                     <% } %>
@@ -56,12 +60,35 @@
           </table>
           
           </div>
+          <!-- delete script -->
+          <script>
+                    $('#deleteProduct').submit(function (event) {
+                           event.preventDefault();
+                           var id = $('.submit-delete').attr('data-id')
+                           console.log(id)
+
+                           var request = {
+                              'url': `http://localhost:3000/api/product/${id}`,
+                              'method': 'DELETE',
+                           };
+
+                           if(confirm('Beneran Mau Hapus?')){
+                              $.ajax(request).done(function(response){
+                                   console.log('success');
+                                   alert('Data udah di hapus coy');
+                                   location.reload();
+                              })
+                           }
+                        
+                    }
+               );
+          </script>
           
           <!-- script jquery dan datatables -->
           <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
           <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
           <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
-          <script src="./asset/index.js"></script>
+      
 
           <script>
                $(document).ready(function () {
