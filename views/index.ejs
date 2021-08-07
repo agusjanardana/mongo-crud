@@ -48,10 +48,10 @@
                               <a href="/update-product?id=<%= product[i]._id %> " class="btn btn-primary me-1" style="height:38px;">
                                    Edit
                               </a>
-                              <form method="" id="deleteProduct">
-                                   <button type="submit" class="btn btn-danger submit-delete" data-id=<%= product[i]._id%> >
-                                   Delete
-                              </button>
+                              <form method="" id="tag<%= product[i]._id%>" >
+                                   <button onclick = "deleteData()" type="submit" class="btn btn-danger submit-delete" data-id=<%= product[i]._id%> >
+                                        Delete
+                                   </button>
                               </form>
                          </td>
                     </tr>
@@ -62,26 +62,30 @@
           </div>
           <!-- delete script -->
           <script>
-                    $('#deleteProduct').submit(function (event) {
-                           event.preventDefault();
-                           var id = $('.submit-delete').attr('data-id')
-                           console.log(id)
+               function deleteData() { 
+                    $('form[id^=tag]').submit(function (event) {
+                    event.preventDefault();
 
-                           var request = {
-                              'url': `http://localhost:3000/api/product/${id}`,
-                              'method': 'DELETE',
-                           };
+                    var id = $('.submit-delete').attr('data-id')
+                    console.log(id)
 
-                           if(confirm('Beneran Mau Hapus?')){
-                              $.ajax(request).done(function(response){
-                                   console.log('success');
-                                   alert('Data udah di hapus coy');
-                                   location.reload();
-                              })
-                           }
-                        
+                    var request = {
+                         'url': `http://localhost:3000/api/product/` + id,
+                         'method': 'DELETE',
+                    };
+
+                    if(confirm('Beneran Mau Hapus?')){
+                         $.ajax(request).done(function(response){
+                              console.log('success');
+                              alert('Data udah di hapus coy');
+                              location.reload();
+                         })
                     }
-               );
+               
+               }
+          );
+          }
+                    
           </script>
           
           <!-- script jquery dan datatables -->
