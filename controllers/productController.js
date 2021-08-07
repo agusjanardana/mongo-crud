@@ -19,6 +19,7 @@ exports.create = (req, res) => {
    // save ke DB
    try {
       product.save().then((data) => {
+         // res.send(data);
          res.redirect('/');
       });
    } catch (error) {
