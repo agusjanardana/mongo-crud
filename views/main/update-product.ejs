@@ -12,11 +12,8 @@
          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
          crossorigin="anonymous"
       />
-      <script
-         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-         crossorigin="anonymous"
-      ></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      
       <script src="https://kit.fontawesome.com/a076d05399.js"></script>
       <script
          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -36,7 +33,6 @@
          <div class="row">
             <div class="col-lg-6 col-md-offset-3">
                <h1>Update your Product!</h1>
-               <form method="POST" action="/api/product">
                   <div class="panel panel-default">
                      <div class="panel-body">
                         <div class="form-group">
@@ -78,45 +74,47 @@
                            />
                         </div>
                         <button
-                           type="button"
-                           id="submit-a"
+                           type="submit"
                            class="btn btn-success"
-                           onClick = 'updateData()'
                         >
                            Update!
                         </button>
                         </form>
-                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-                        <script>
-                           $('#submit-a').click(function () {
-                              var category = $('#kategori').val();
-                              var product = $('#name').val();
-                              var price = $('#price').val();
-                              if (
-                                 category == '' ||
-                                 product == '' ||
-                                 price == ''
-                              ) {
-                                 swal({
-                                    title: 'Datanya isi dulu!',
-                                    text: 'Tolong cek lagi data yang kosong!',
-                                    icon: 'warning',
-                                    button: 'Ok',
-                                 });
-                                 return false;
-                              } else {
-                                 swal({
-                                    title: 'Sukses!',
-                                    text: 'Data kamu Berhasil di Update!',
-                                    icon: 'success',
-                                    button: 'Done!',
-                                 }).then(() => {
-                                    window.location = '/';
-                                 });
-                              }
-                           });
+
+                        <!-- update script -->
+                        <script >
+
+               
+
+                           $('#update_product').submit(function (event) {
+                              event.preventDefault();
+
+                              var unindexed_array = $(this).serializeArray();
+                              var data = {};
+
+                              $.map(unindexed_array, function (n, i) {
+                                 data[n['name']] = n['value'];
+                              });
+
+                              console.log(data);
+
+                              var request = {
+                                 'url': `http://localhost:3000/api/product/${data.id}`,
+                                 'method': 'PUT',
+                                 'data': data,
+                              };
+
+                              $.ajax(request).done(function (response) {
+                                 console.log('success');
+                                 alert('Data berhasil di update');
+                                 setTimeout(function() {
+                                    window.location.href = "/";
+                                 }, 1000);
+                              });
+                        });
+
                         </script>
-                        <script src="../asset/index.js"></script>
+                        
                      </div>
                   </div>
                </form>
